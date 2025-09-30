@@ -45,6 +45,7 @@ TOPSTEP_API_SECRET=your_api_secret_here
 ### Test Topstep Connection
 ```bash
 node test-live-data.js
+node test-orders.js   #(Requires OCO Bracket on TopstepX)
 ```
 
 ## Disclaimer
