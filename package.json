@@ -5,6 +5,9 @@
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
+    "test-live-data": "node test-live-data.js",
+    "test-orders": "node test-orders.js",
+    "dev": "nodemon src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

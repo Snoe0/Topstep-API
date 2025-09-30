@@ -391,10 +391,26 @@ class TopstepXClient {
 
   async placeOrder(orderData) {
     try {
-      const response = await this.httpClient.post('/orders', orderData);
-      return response.data;
+      await this.ensureAuthenticated();
+
+      console.log('Placing order with data:', JSON.stringify(orderData, null, 2));
+
+      const response = await this.httpClient.post('/Order/place', orderData);
+
+      if (response.data && response.data.success === true && response.data.errorCode === 0) {
+        console.log('✅ Order placed successfully');
+        return response.data;
+      } else {
+        const errorMessage = response.data?.errorMessage || 'Failed to place order';
+        const errorCode = response.data?.errorCode || 'Unknown';
+        throw new Error(`Order placement failed: ${errorMessage} (Code: ${errorCode})`);
+      }
     } catch (error) {
       console.error('Order placement error:', error.message);
+      if (error.response) {
+        console.error('Response status:', error.response.status);
+        console.error('Response data:', JSON.stringify(error.response.data, null, 2));
+      }
       throw error;
     }
   }
